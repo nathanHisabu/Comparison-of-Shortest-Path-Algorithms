@@ -2,18 +2,14 @@ import numpy as np
 from random import randint
 
 def graphe2(n, p, a, b):
-
     M = np.random.binomial(1, p, size=(n, n))
-
     M = M.astype('float64')
-
     for i in range(n):
         for j in range(n):
             if M[i][j] == 0:
                 M[i][j] = float('inf')
             else:
                 M[i][j] = randint(a, b)
-
     return M
 
 def dijkstra(M, depart):
@@ -25,19 +21,18 @@ def dijkstra(M, depart):
     dist[depart] = 0
 
     restants = set(sommets)
-    rencontre = []  # Liste des sommets rencontrés
+    rencontre = []  # List of vertices visited
 
     while restants:
         u = min(restants, key=lambda s: dist[s])
         if dist[u] == float('inf'):
-            break  # Si tous les sommets restants sont inaccessibles
+            break  # If all remaining vertices are unreachable
 
         restants.remove(u)
-        rencontre.append(u)  # On enregistre le sommet rencontré
+        rencontre.append(u)  # Record visited vertex
 
-        
         for v in sommets:
-            if M[u][v] > 0 and v in restants:  # Si une arête existe et v est dans restants
+            if M[u][v] > 0 and v in restants:  # If edge exists and v is in remaining
                 new_dist = dist[u] + M[u][v]
                 if new_dist < dist[v]:
                     dist[v] = new_dist
@@ -58,7 +53,7 @@ def dijkstra(M, depart):
     return dist, chemins, rencontre
 
 
-#on a enlever les prints pour faciliter la lisibilite pour la question 6, 
+# Removed prints to simplify readability for Question 6
 def Bellman_Ford(M, s0, fleche_list, label=""):
     n = len(M)
     dist = [float('inf')] * n
@@ -77,7 +72,7 @@ def Bellman_Ford(M, s0, fleche_list, label=""):
         tours += 1
         if not modification:
             break
-    #print(f"[{label}] Nombre de tours effectués : {tours}")
+    #print(f"[{label}] Number of iterations: {tours}")
 
     # Detect negative cycles
     cycle_negatif = [False] * n
@@ -100,10 +95,10 @@ def Bellman_Ford(M, s0, fleche_list, label=""):
 
         if dist[s] == float('inf'):
             pass
-            #print(f"Sommet {s} non joignable à {s0} par un chemin dans le graphe G")
+            #print(f"Vertex {s} unreachable from {s0}")
         elif cycle_negatif[s]:
             pass
-            #print(f"Sommet {s} joignable depuis {s0} mais pas de plus court chemin (cycle négatif)")
+            #print(f"Vertex {s} reachable from {s0} but no shortest path (negative cycle)")
         else:
             # Rebuild path with safety limit to avoid infinite loops
             path = []
@@ -115,29 +110,29 @@ def Bellman_Ford(M, s0, fleche_list, label=""):
                 etapes += 1
             path.append(s0)
             path.reverse()
-            #print(f"Chemin de {s0} à {s} : longueur = {dist[s]}, itinéraire = {path}")
+            #print(f"Path from {s0} to {s}: distance = {dist[s]}, route = {path}")
             
-#Parcours en profondeur
+# Depth-first traversal
 def pp(M,s):
-    n = len(M)                       #taille du tableau = nombre de sommets
-    couleur = {}                     #On colorie tous les sommets en blanc et s en vert
+    n = len(M)                       # size of the array = number of vertices
+    couleur = {}                     # color all vertices white and s green
     for i in range(n):
         couleur[i] = 'blanc'
     couleur[s] = 'vert'
-    pile = [s]                       #On initialise la pile à s
-    Resultat = [s]                   #On initialise la liste des résultats à s
+    pile = [s]                       # initialize stack with s
+    Resultat = [s]                   # initialize result list with s
     while pile != [] :
-        i = pile[-1] # Le dernier sommet i dea la pile
-        Succ_blanc=[] #On crée la liste des succeseurs non déjà visitées(blancs)
+        i = pile[-1] # last vertex in stack
+        Succ_blanc=[] # list of unvisited successors (white)
         for j in range(n):
             if (M[pile[-1]][j] != 0 and couleur[j] == 'blanc') :
                 Succ_blanc.append(j)
         if Succ_blanc != [] :
-            pile.append(Succ_blanc[0]) #On l'empile
-            couleur[Succ_blanc[0]] = 'vert'  #On le colorie en vert
-            Resultat.append(Succ_blanc[0])   # On le met en liste resultat
+            pile.append(Succ_blanc[0]) # push it
+            couleur[Succ_blanc[0]] = 'vert'  # mark green
+            Resultat.append(Succ_blanc[0])   # add to result list
         else :
-            pile.pop(-1)   #Sinon on sort i de la pile
+            pile.pop(-1)   # otherwise remove i from stack
     return Resultat
 
 def transforme_parcours_en_fleche(M,parcours):
