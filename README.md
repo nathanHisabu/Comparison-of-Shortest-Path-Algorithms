@@ -2,7 +2,7 @@
 
 **Authors:** Basset Adrien, Hisabu Nathan Tekeste, Magadiyev Imam
 **Group:** B7
-**Institution:** U.P.S
+**Institution:** IUT de Toulouse
 **Academic Year:** 2025-2026
 
 ---
