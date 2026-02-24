@@ -1,5 +1,5 @@
 import time
-import ImportationPourQuestion6 as Im
+import graph_utils_dijkstra_bellman as Im
 # ImportationPourQuestion6 is a module containing all necessary functions to simplify our work in this question.
 
 import matplotlib.pyplot as plt
@@ -67,3 +67,4 @@ a_bf, b_bf = np.polyfit(log_n, log_temps_bf, 1)
 # Display estimated exponents (slopes of log-log lines)
 print("Slope a for Dijkstra:", a_dij)
 print("Slope a for Bellman-Ford:", a_bf)
+
